@@ -37,7 +37,7 @@ namespace SaveTheHumans
             targetTimer.Tick += TargetTimer_Tick;
             targetTimer.Interval = TimeSpan.FromSeconds(.1);
 
-            playArea.Children.Remove(gameOverText);
+            gameOverText.Visibility = Visibility.Collapsed;
 
         }
 
@@ -46,11 +46,12 @@ namespace SaveTheHumans
             progressBar.Value += 1;
             if (progressBar.Value >= progressBar.Maximum)
             {
-                EndTheGame();
+                String endReason = "time";
+                EndTheGame(endReason);
             }
         }
 
-        private void EndTheGame()
+        private void EndTheGame(string endReason)
         {
             if (!playArea.Children.Contains(gameOverText))
             {
@@ -58,7 +59,21 @@ namespace SaveTheHumans
                 targetTimer.Stop();
                 humanCaptured = false;
                 startButton.Visibility = Visibility.Visible;
-                playArea.Children.Add(gameOverText);
+
+                if (endReason == "enemy")
+                {
+                    gameOverText.Text = "The aliens have captured you! Game Over!";
+                }
+                else if (endReason == "leftscreen")
+                {
+                    gameOverText.Text = "Cannot run away! Game Over!";
+                }
+                else if (endReason == "time")
+                {
+                    gameOverText.Text = "Time expired! Game Over!";
+                }
+
+                gameOverText.Visibility = Visibility.Visible;
             }
         }
 
@@ -82,7 +97,8 @@ namespace SaveTheHumans
         {
             if (humanCaptured)
             {
-                EndTheGame();
+                string endReason = "enemy";
+                EndTheGame(endReason);
             }
         }
 
@@ -112,9 +128,15 @@ namespace SaveTheHumans
             human.IsHitTestVisible = true;
             humanCaptured = false;
             progressBar.Value = 0;
+
             startButton.Visibility = Visibility.Collapsed;
+            gameOverText.Visibility = Visibility.Collapsed;
+
+            playArea.Children.Clear();
+
             playArea.Children.Add(target);
             playArea.Children.Add(human);
+
             enemyTimer.Start();
             targetTimer.Start();
         }
@@ -166,7 +188,8 @@ namespace SaveTheHumans
         {
             if (humanCaptured)
             {
-                EndTheGame();
+                String endReason = "leftscreen";
+                EndTheGame(endReason);
             }
         }
     }
