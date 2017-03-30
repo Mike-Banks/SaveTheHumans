@@ -9,12 +9,22 @@
     <Page.Resources>
         <ControlTemplate x:Key="EnemyTemplate" TargetType="ContentControl">
             <Grid>
-                <Ellipse Fill="Red" Height="100" Stroke="Black" Width="100"/>
+                <Ellipse Fill="Gray" Height="100" Stroke="Black" Width="75"/>
+                <Ellipse Fill="Black" HorizontalAlignment="Center" Height="35" Margin="40,20,70,10" Stroke="Black" VerticalAlignment="Top" Width="25" RenderTransformOrigin="0.5,0.5">
+                    <Ellipse.RenderTransform>
+                        <CompositeTransform SkewX="10"/>
+                    </Ellipse.RenderTransform>
+                </Ellipse>
+                <Ellipse Fill="Black" HorizontalAlignment="Center" Height="35" Stroke="Black" VerticalAlignment="Top" Width="25" Margin="70,20,40,0" RenderTransformOrigin="0.5,0.5">
+                    <Ellipse.RenderTransform>
+                        <CompositeTransform SkewX="-10"/>
+                    </Ellipse.RenderTransform>
+                </Ellipse>
             </Grid>
         </ControlTemplate>
     </Page.Resources>
 
-    <Grid Background="#FFAAB1B3">
+    <Grid x:Name="grid" Background="#FFAAB1B3">
         <Grid.RowDefinitions>
             <RowDefinition Height="7*"/>
             <RowDefinition Height="21*"/>
@@ -28,19 +38,20 @@
 
         <Button x:Name="startButton" Content="Start!" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Click="startButton_Click" Background="#FF0BAE60"/>
         <ProgressBar x:Name="progressBar" Grid.Column="1" Grid.Row="2" Height="20" Background="Black"/>
-        <Canvas x:Name="playArea" Grid.Row="1" Grid.ColumnSpan="3">
+        <Canvas x:Name="playArea" Grid.Row="1" Grid.ColumnSpan="3" PointerMoved="playArea_PointerMoved" PointerExited="playArea_PointerExited">
             <Canvas.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFA640EE" Offset="0"/>
                     <GradientStop Color="#FF31C92A" Offset="1"/>
                 </LinearGradientBrush>
             </Canvas.Background>
-            <StackPanel x:Name="human" Orientation="Vertical" Width="20" Height="20">
+            <StackPanel x:Name="human" Orientation="Vertical" Width="Auto" Height="Auto" PointerPressed="human_PointerPressed">
                 <Ellipse Fill="White" Height="10" Width="10" Stroke="Black"/>
-                <Rectangle Fill="White" Height="25" Width="10" Stroke="Black"/>
+                <Rectangle Fill="White" Height="25" Width="20" Stroke="Black" HorizontalAlignment="Left"/>
+                <Rectangle Fill="White" Height="15" Width="10" Stroke="Black"/>
             </StackPanel>
-            <TextBlock x:Name="gameOverText" Canvas.Left="376" TextWrapping="Wrap" Text="Game Over" Canvas.Top="145" FontFamily="Arial Black" FontSize="100" FontWeight="Bold" FontStyle="Italic"/>
-            <Rectangle x:Name="target" Height="50" Stroke="Black" Width="50" Canvas.Left="360" Canvas.Top="25" RenderTransformOrigin="0.5,0.5">
+            <TextBlock x:Name="gameOverText" Canvas.Left="373" TextWrapping="Wrap" Text="Game Over" Canvas.Top="140" FontFamily="Arial Black" FontSize="100" FontWeight="Bold" FontStyle="Italic"/>
+            <Rectangle x:Name="target" Height="50" Stroke="Black" Width="50" Canvas.Left="383.475" Canvas.Top="327.053" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" PointerEntered="target_PointerEntered">
                 <Rectangle.RenderTransform>
                     <CompositeTransform Rotation="45"/>
                 </Rectangle.RenderTransform>
