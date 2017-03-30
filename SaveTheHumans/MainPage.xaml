@@ -6,8 +6,57 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <Page.Resources>
+        <ControlTemplate x:Key="EnemyTemplate" TargetType="ContentControl">
+            <Grid>
+                <Ellipse Fill="Red" Height="100" Stroke="Black" Width="100"/>
+            </Grid>
+        </ControlTemplate>
+    </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="7*"/>
+            <RowDefinition Height="21*"/>
+            <RowDefinition Height="8*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Button x:Name="startButton" Content="Start!" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center"/>
+        <ProgressBar Grid.Column="1" Grid.Row="2" Height="20"/>
+        <Canvas x:Name="playArea" Grid.Row="1" Grid.ColumnSpan="3">
+            <Canvas.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFA640EE" Offset="0"/>
+                    <GradientStop Color="#FF31C92A" Offset="1"/>
+                </LinearGradientBrush>
+            </Canvas.Background>
+            <StackPanel x:Name="human" Orientation="Vertical" Width="20" Height="20">
+                <Ellipse Fill="White" Height="10" Width="10" Stroke="Black"/>
+                <Rectangle Fill="White" Height="25" Width="10" Stroke="Black"/>
+            </StackPanel>
+            <TextBlock x:Name="gameOverText" Canvas.Left="376" TextWrapping="Wrap" Text="Game Over" Canvas.Top="145" FontFamily="Arial Black" FontSize="100" FontWeight="Bold" FontStyle="Italic"/>
+            <Rectangle Height="50" Stroke="Black" Width="50" Canvas.Left="360" Canvas.Top="25" RenderTransformOrigin="0.5,0.5">
+                <Rectangle.RenderTransform>
+                    <CompositeTransform Rotation="45"/>
+                </Rectangle.RenderTransform>
+                <Rectangle.Fill>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Black" Offset="0"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+        </Canvas>
+        <TextBlock x:Name="_txtTtile" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Save the Humans!" VerticalAlignment="Center" Grid.Column="1" FontSize="55" FontFamily="Snap ITC"/>
+        <StackPanel Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock x:Name="_txtAvoid" TextWrapping="Wrap" Text="Avoid These" FontFamily="Snap ITC" FontSize="18" Style="{StaticResource SubheaderTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <ContentControl Content="ContentControl" HorizontalAlignment="Center" VerticalAlignment="Center" Template="{StaticResource EnemyTemplate}"/>
+        </StackPanel>
 
     </Grid>
 </Page>
