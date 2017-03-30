@@ -37,6 +37,8 @@ namespace SaveTheHumans
             targetTimer.Tick += TargetTimer_Tick;
             targetTimer.Interval = TimeSpan.FromSeconds(.1);
 
+            playArea.Children.Remove(gameOverText);
+
         }
 
         private void TargetTimer_Tick(object sender, object e)
@@ -111,7 +113,6 @@ namespace SaveTheHumans
             humanCaptured = false;
             progressBar.Value = 0;
             startButton.Visibility = Visibility.Collapsed;
-            playArea.Children.Clear();
             playArea.Children.Add(target);
             playArea.Children.Add(human);
             enemyTimer.Start();

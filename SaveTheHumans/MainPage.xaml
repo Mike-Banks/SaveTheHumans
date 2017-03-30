@@ -9,7 +9,14 @@
     <Page.Resources>
         <ControlTemplate x:Key="EnemyTemplate" TargetType="ContentControl">
             <Grid>
-                <Ellipse Fill="Gray" Height="100" Stroke="Black" Width="75"/>
+                <Ellipse Height="100" Stroke="Black" Width="75">
+                    <Ellipse.Fill>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FFB8E7C7" Offset="0"/>
+                            <GradientStop Color="#FF00FF4C" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Ellipse.Fill>
+                </Ellipse>
                 <Ellipse Fill="Black" HorizontalAlignment="Center" Height="35" Margin="40,20,70,10" Stroke="Black" VerticalAlignment="Top" Width="25" RenderTransformOrigin="0.5,0.5">
                     <Ellipse.RenderTransform>
                         <CompositeTransform SkewX="10"/>
@@ -42,7 +49,7 @@
             <Canvas.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFA640EE" Offset="0"/>
-                    <GradientStop Color="#FF31C92A" Offset="1"/>
+                    <GradientStop Color="#FF16E9EE" Offset="1"/>
                 </LinearGradientBrush>
             </Canvas.Background>
             <StackPanel x:Name="human" Orientation="Vertical" Width="Auto" Height="Auto" PointerPressed="human_PointerPressed">
@@ -50,10 +57,13 @@
                 <Rectangle Fill="White" Height="25" Width="20" Stroke="Black" HorizontalAlignment="Left"/>
                 <Rectangle Fill="White" Height="15" Width="10" Stroke="Black"/>
             </StackPanel>
-            <TextBlock x:Name="gameOverText" Canvas.Left="373" TextWrapping="Wrap" Text="Game Over" Canvas.Top="140" FontFamily="Arial Black" FontSize="100" FontWeight="Bold" FontStyle="Italic"/>
-            <Rectangle x:Name="target" Height="50" Stroke="Black" Width="50" Canvas.Left="383.475" Canvas.Top="327.053" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" PointerEntered="target_PointerEntered">
+            <TextBlock x:Name="gameOverText" Canvas.Left="368" TextWrapping="Wrap" Text="Game Over" Canvas.Top="120" FontFamily="Arial Black" FontSize="100" FontWeight="Bold" FontStyle="Italic"/>
+            <Rectangle x:Name="target" Height="50" Stroke="Black" Width="50" Canvas.Left="383.475" Canvas.Top="327.053" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" PointerEntered="target_PointerEntered" RadiusX="20" RadiusY="20">
+                <Rectangle.FocusVisualPrimaryBrush>
+                    <SolidColorBrush Color="Black"/>
+                </Rectangle.FocusVisualPrimaryBrush>
                 <Rectangle.RenderTransform>
-                    <CompositeTransform Rotation="45"/>
+                    <CompositeTransform Rotation="130" SkewX="30"/>
                 </Rectangle.RenderTransform>
                 <Rectangle.Fill>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
