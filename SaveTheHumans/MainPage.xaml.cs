@@ -27,6 +27,7 @@ namespace SaveTheHumans
         DispatcherTimer enemyTimer = new DispatcherTimer();
         DispatcherTimer targetTimer = new DispatcherTimer();
         bool humanCaptured = false;
+        private int _savedHumanCounter;
 
         public MainPage()
         {
@@ -38,6 +39,10 @@ namespace SaveTheHumans
             targetTimer.Interval = TimeSpan.FromSeconds(.1);
 
             gameOverText.Visibility = Visibility.Collapsed;
+
+            _savedHumanCounter = 0;
+
+            _pnlLivesSaved.Visibility = Visibility.Collapsed;
 
         }
 
@@ -128,9 +133,11 @@ namespace SaveTheHumans
             human.IsHitTestVisible = true;
             humanCaptured = false;
             progressBar.Value = 0;
+            _savedHumanCounter = 0;
 
             startButton.Visibility = Visibility.Collapsed;
             gameOverText.Visibility = Visibility.Collapsed;
+            _pnlLivesSaved.Visibility = Visibility.Visible;
 
             playArea.Children.Clear();
 
@@ -159,6 +166,10 @@ namespace SaveTheHumans
                 Canvas.SetTop(target, random.Next((int)playArea.ActualHeight / 10, (int)playArea.ActualHeight / 10 * 2));
                 Canvas.SetLeft(human, random.Next((int)playArea.ActualWidth / 10, (int)playArea.ActualWidth / 10 * 9));
                 Canvas.SetTop(human, random.Next((int)playArea.ActualHeight / 10 * 8, (int)playArea.ActualHeight / 10 * 9));
+
+                _savedHumanCounter += 1;
+                _txtDisplayHumansSaved.Text = _savedHumanCounter.ToString();
+
                 humanCaptured = false;
                 human.IsHitTestVisible = true;
             }
