@@ -52,12 +52,12 @@
                     <GradientStop Color="#FF16E9EE" Offset="1"/>
                 </LinearGradientBrush>
             </Canvas.Background>
-            <StackPanel x:Name="human" Orientation="Vertical" Width="Auto" Height="Auto" PointerPressed="human_PointerPressed">
+            <StackPanel x:Name="human" Orientation="Vertical" Width="Auto" Height="Auto" PointerPressed="human_PointerPressed" Canvas.Left="425" Canvas.Top="335">
                 <Ellipse Fill="White" Height="10" Width="10" Stroke="Black"/>
                 <Rectangle Fill="White" Height="25" Width="20" Stroke="Black" HorizontalAlignment="Left"/>
                 <Rectangle Fill="White" Height="15" Width="10" Stroke="Black"/>
             </StackPanel>
-            <Rectangle x:Name="target" Height="50" Stroke="Black" Width="50" Canvas.Left="383.475" Canvas.Top="327.053" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" PointerEntered="target_PointerEntered" RadiusX="20" RadiusY="20">
+            <Rectangle x:Name="target" Height="50" Stroke="Black" Width="50" Canvas.Left="775.876" Canvas.Top="15.57" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" PointerEntered="target_PointerEntered" RadiusX="20" RadiusY="20">
                 <Rectangle.RenderTransform>
                     <CompositeTransform Rotation="130" SkewX="30"/>
                 </Rectangle.RenderTransform>

@@ -155,10 +155,10 @@ namespace SaveTheHumans
             if (targetTimer.IsEnabled == true && humanCaptured)
             {
                 progressBar.Value = 0;
-                Canvas.SetLeft(target, random.Next(100, (int)playArea.ActualWidth - 100));
-                Canvas.SetTop(target, random.Next(100, (int)playArea.ActualHeight - 100));
-                Canvas.SetLeft(human, random.Next(100, (int)playArea.ActualWidth - 100));
-                Canvas.SetTop(human, random.Next(100, (int)playArea.ActualHeight - 100));
+                Canvas.SetLeft(target, random.Next((int)playArea.ActualWidth / 10, (int)playArea.ActualWidth / 10 * 9));
+                Canvas.SetTop(target, random.Next((int)playArea.ActualHeight / 10, (int)playArea.ActualHeight / 10 * 2));
+                Canvas.SetLeft(human, random.Next((int)playArea.ActualWidth / 10, (int)playArea.ActualWidth / 10 * 9));
+                Canvas.SetTop(human, random.Next((int)playArea.ActualHeight / 10 * 8, (int)playArea.ActualHeight / 10 * 9));
                 humanCaptured = false;
                 human.IsHitTestVisible = true;
             }
