@@ -14,7 +14,7 @@
         </ControlTemplate>
     </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="#FFAAB1B3">
         <Grid.RowDefinitions>
             <RowDefinition Height="7*"/>
             <RowDefinition Height="21*"/>
@@ -26,8 +26,8 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Button x:Name="startButton" Content="Start!" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Click="startButton_Click"/>
-        <ProgressBar Grid.Column="1" Grid.Row="2" Height="20"/>
+        <Button x:Name="startButton" Content="Start!" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Click="startButton_Click" Background="#FF0BAE60"/>
+        <ProgressBar x:Name="progressBar" Grid.Column="1" Grid.Row="2" Height="20" Background="Black"/>
         <Canvas x:Name="playArea" Grid.Row="1" Grid.ColumnSpan="3">
             <Canvas.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -40,7 +40,7 @@
                 <Rectangle Fill="White" Height="25" Width="10" Stroke="Black"/>
             </StackPanel>
             <TextBlock x:Name="gameOverText" Canvas.Left="376" TextWrapping="Wrap" Text="Game Over" Canvas.Top="145" FontFamily="Arial Black" FontSize="100" FontWeight="Bold" FontStyle="Italic"/>
-            <Rectangle Height="50" Stroke="Black" Width="50" Canvas.Left="360" Canvas.Top="25" RenderTransformOrigin="0.5,0.5">
+            <Rectangle x:Name="target" Height="50" Stroke="Black" Width="50" Canvas.Left="360" Canvas.Top="25" RenderTransformOrigin="0.5,0.5">
                 <Rectangle.RenderTransform>
                     <CompositeTransform Rotation="45"/>
                 </Rectangle.RenderTransform>
