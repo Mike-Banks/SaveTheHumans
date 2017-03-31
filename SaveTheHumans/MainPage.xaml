@@ -29,6 +29,13 @@
                 </Ellipse>
             </Grid>
         </ControlTemplate>
+        <ControlTemplate x:Key="HumanTemplate" TargetType="ContentControl">
+            <Grid>
+                <Ellipse Fill="#FFF4F4F5" HorizontalAlignment="Center" Height="10" Stroke="Black" VerticalAlignment="Top" Width="10"/>
+                <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="20" Stroke="Black" VerticalAlignment="Top" Width="15" Margin="0,10,0,0"/>
+                <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Center" Height="15" Stroke="Black" VerticalAlignment="Top" Width="10" Margin="0,30,0,0"/>
+            </Grid>
+        </ControlTemplate>
     </Page.Resources>
 
     <Grid x:Name="_pnlGrid" Background="#FFAAB1B3">
@@ -52,12 +59,7 @@
                     <GradientStop Color="#FF16E9EE" Offset="1"/>
                 </LinearGradientBrush>
             </Canvas.Background>
-            <StackPanel x:Name="_pnlHuman" Orientation="Vertical" Width="Auto" Height="Auto" PointerPressed="OnHumanUiPressed" Canvas.Left="425" Canvas.Top="335">
-                <Ellipse Fill="White" Height="10" Width="10" Stroke="Black"/>
-                <Rectangle Fill="White" Height="25" Width="20" Stroke="Black" HorizontalAlignment="Left"/>
-                <Rectangle Fill="White" Height="15" Width="10" Stroke="Black"/>
-            </StackPanel>
-            <Rectangle x:Name="_uiTarget" Height="50" Stroke="Black" Width="50" Canvas.Left="775.876" Canvas.Top="15.57" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" PointerEntered="OnPortalUiEntered" RadiusX="20" RadiusY="20">
+            <Rectangle x:Name="_uiTarget" Height="50" Stroke="Black" Width="50" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" PointerEntered="OnPortalUiEntered" RadiusX="20" RadiusY="20">
                 <Rectangle.RenderTransform>
                     <CompositeTransform Rotation="130" SkewX="30"/>
                 </Rectangle.RenderTransform>
@@ -74,7 +76,7 @@
             <TextBlock x:Name="_lblAvoid" TextWrapping="Wrap" Text="Avoid These" FontFamily="Snap ITC" FontSize="18" Style="{StaticResource SubheaderTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,10"/>
             <ContentControl Content="ContentControl" HorizontalAlignment="Center" VerticalAlignment="Center" Template="{StaticResource EnemyTemplate}"/>
         </StackPanel>
-        <TextBlock x:Name="_txtGameOverText" TextWrapping="Wrap" Text="Game Over" FontFamily="Arial Black" FontSize="50" FontWeight="Bold" FontStyle="Italic" Grid.Column="1" Margin="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock x:Name="_txtGameOverText" TextWrapping="Wrap" Text="" FontFamily="Arial Black" FontSize="50" FontWeight="Bold" FontStyle="Italic" Grid.Column="1" Margin="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <StackPanel x:Name="_pnlLivesSaved" HorizontalAlignment="Right" Height="100" VerticalAlignment="Center" Grid.Column="1" Margin="0">
             <TextBlock x:Name="_lblHumansSaved" TextWrapping="Wrap" Text="Humans Saved" FontSize="25" FontFamily="Snap ITC"/>
             <TextBlock x:Name="_txtDisplayHumansSaved" TextWrapping="Wrap" Text="0" TextAlignment="Center" Margin="0,15,0,0" FontSize="25" FontFamily="Snap ITC"/>

@@ -26,17 +26,19 @@ namespace SaveTheHumans
         /// <summary>
         /// Field Variable used to deploy and store a random number
         /// </summary>
-        Random _random = new Random();
+        private Random _random = new Random();
 
         /// <summary>
-        /// Field Variable used to create a new instance of a timer
+        /// Field Variable used to create a new instance of a timer for the enemies
         /// </summary>
-        DispatcherTimer _tmenemyTimer = new DispatcherTimer();
+        private DispatcherTimer _tmEnemyTimer = new DispatcherTimer();
 
         /// <summary>
-        /// Field Variable used to create a new instance of a timer
+        /// Field Variable used to create a new instance of a timer for the portal
         /// </summary>
-        DispatcherTimer _tmtargetTimer = new DispatcherTimer();
+        private DispatcherTimer _tmTargetTimer = new DispatcherTimer();
+
+        private DispatcherTimer _tmHumanTimer = new DispatcherTimer();
 
         /// <summary>
         /// Field Variable used to store a boolean that keeps track of whether a human is currently being saved
@@ -48,6 +50,8 @@ namespace SaveTheHumans
         /// </summary>
         private int _savedHumanCounter;
 
+        ContentControl _selectedHuman;
+
         /// <summary>
         /// Constructor used to initialize the main page and the field variables
         /// </summary>
@@ -56,12 +60,16 @@ namespace SaveTheHumans
             this.InitializeComponent();
 
             // Initiate timer values for the enemy spawn timer
-            _tmenemyTimer.Tick += OnEnemyTimerTick;
-            _tmenemyTimer.Interval = TimeSpan.FromSeconds(2);
+            _tmEnemyTimer.Tick += OnEnemyTimerTick;
+            _tmEnemyTimer.Interval = TimeSpan.FromSeconds(2);
 
             // Initiate timer values for the game timer
-            _tmtargetTimer.Tick += OnTargetTimerTick;
-            _tmtargetTimer.Interval = TimeSpan.FromSeconds(.1);
+            _tmTargetTimer.Tick += OnTargetTimerTick;
+            _tmTargetTimer.Interval = TimeSpan.FromSeconds(.05);
+
+            // Initiate the timer values for the human spawn timer
+            _tmHumanTimer.Tick += OnHumanTimerTick;
+            _tmHumanTimer.Interval = TimeSpan.FromSeconds(4);
 
             // Ensure certain text blocks are hidden when the page is loaded
             _txtGameOverText.Visibility = Visibility.Collapsed;
@@ -69,6 +77,10 @@ namespace SaveTheHumans
 
             // Initiate the counter keeping track of saved humans to 0
             _savedHumanCounter = 0;
+
+            _selectedHuman = null;
+
+            _pnlPlayArea.Children.Clear();
         }
 
         #region Methods
@@ -78,7 +90,12 @@ namespace SaveTheHumans
         /// </summary>
         private void InitializePortalPosition()
         {
+            // Set the location of the first portal
+            Canvas.SetLeft(_uiTarget, _random.Next((int)_pnlPlayArea.ActualWidth / 10, (int)_pnlPlayArea.ActualWidth / 10 * 9));
+            Canvas.SetTop(_uiTarget, _random.Next((int)_pnlPlayArea.ActualHeight / 10, (int)_pnlPlayArea.ActualHeight / 10 * 2));
 
+            // Add the portal to the canvas
+            _pnlPlayArea.Children.Add(_uiTarget);
         }
 
         /// <summary>
@@ -86,7 +103,26 @@ namespace SaveTheHumans
         /// </summary>
         private void InitializeHumanPosition()
         {
+            AddHuman();         
+        }
 
+        private void AddHuman()
+        {
+            // Create a new human control object and apply the human template to it
+            ContentControl human = new ContentControl();
+            human.Template = Resources["HumanTemplate"] as ControlTemplate;
+
+            // Set the location of the first human
+            Canvas.SetLeft(human, _random.Next((int)_pnlPlayArea.ActualWidth / 10, (int)_pnlPlayArea.ActualWidth / 10 * 9));
+            Canvas.SetTop(human, _random.Next((int)_pnlPlayArea.ActualHeight / 10 * 8, (int)_pnlPlayArea.ActualHeight / 10 * 9));
+
+            // Add the human to the canvas
+            _pnlPlayArea.Children.Add(human);
+
+            // Allow the human to be clicked on
+            human.IsHitTestVisible = true;
+
+            human.PointerPressed += OnHumanUiPressed;
         }
 
         /// <summary>
@@ -142,8 +178,7 @@ namespace SaveTheHumans
         /// </summary>
         private void StartGame()
         {
-            // Reset boolean variables
-            _pnlHuman.IsHitTestVisible = true;
+            // Reset boolean rescue-in-progress variable
             _humanRescueInProgress = false;
 
             // Reset counter variables
@@ -155,14 +190,18 @@ namespace SaveTheHumans
             _txtGameOverText.Visibility = Visibility.Collapsed;
             _pnlLivesSaved.Visibility = Visibility.Visible;
 
+
             // Reset the canvas, then add the initial human and portal
             _pnlPlayArea.Children.Clear();
-            _pnlPlayArea.Children.Add(_uiTarget);
-            _pnlPlayArea.Children.Add(_pnlHuman);
+            InitializePortalPosition();
+            InitializeHumanPosition();
 
             // Start the timers
-            _tmenemyTimer.Start();
-            _tmtargetTimer.Start();
+            _tmEnemyTimer.Start();
+            _tmTargetTimer.Start();
+            _tmHumanTimer.Start();
+
+            _selectedHuman = null;
         }
 
         /// <summary>
@@ -175,8 +214,9 @@ namespace SaveTheHumans
             if (!_pnlPlayArea.Children.Contains(_txtGameOverText))
             {
                 // Stop the timers
-                _tmenemyTimer.Stop();
-                _tmtargetTimer.Stop();
+                _tmEnemyTimer.Stop();
+                _tmTargetTimer.Stop();
+                _tmHumanTimer.Stop();
 
                 // The user cannot rescue humans
                 _humanRescueInProgress = false;
@@ -255,6 +295,12 @@ namespace SaveTheHumans
             AddEnemy();
         }
 
+        private void OnHumanTimerTick(object sender, object e)
+        {
+            // Add a human
+            AddHuman();
+        }
+
         /// <summary>
         /// Event Handler that runs when the user clicks on a human
         /// </summary>
@@ -263,13 +309,11 @@ namespace SaveTheHumans
         private void OnHumanUiPressed(object sender, PointerRoutedEventArgs e)
         {
             // If enemies are currently spawning (if the game is in progress)
-            if (_tmenemyTimer.IsEnabled)
+            if (_tmEnemyTimer.IsEnabled && _humanRescueInProgress == false)
             {
                 // A rescue is in progress
                 _humanRescueInProgress = true;
-
-                // Turn off the hitbox for the human
-                _pnlHuman.IsHitTestVisible = false;
+                _selectedHuman = (ContentControl)sender;
             }
         }
 
@@ -288,19 +332,19 @@ namespace SaveTheHumans
                 Point relativePosition = _pnlGrid.TransformToVisual(_pnlPlayArea).TransformPoint(pointerPosition);
 
                 // If the user moves the cursor too fast
-                if ((Math.Abs(relativePosition.X - Canvas.GetLeft(_pnlHuman)) > _pnlHuman.ActualWidth * 3) || (Math.Abs(relativePosition.Y - Canvas.GetTop(_pnlHuman)) > _pnlHuman.ActualHeight * 3))
+                if ((Math.Abs(relativePosition.X - Canvas.GetLeft(_selectedHuman)) > _selectedHuman.ActualWidth * 3) || (Math.Abs(relativePosition.Y - Canvas.GetTop(_selectedHuman)) > _selectedHuman.ActualHeight * 3))
                 {
                     // Unselect the human, allow it to be clicked again
                     _humanRescueInProgress = false;
-                    _pnlHuman.IsHitTestVisible = true;
+                    //_selectedHuman = null;
                 }
 
                 // If the user does not move their cursor too fast
                 else
                 {
                     // Have the human stay in the center of the cursor and follow it around the screen
-                    Canvas.SetLeft(_pnlHuman, relativePosition.X - _pnlHuman.ActualWidth / 2);
-                    Canvas.SetTop(_pnlHuman, relativePosition.Y - _pnlHuman.ActualHeight / 2);
+                    Canvas.SetLeft(_selectedHuman, relativePosition.X - _selectedHuman.ActualWidth / 2);
+                    Canvas.SetTop(_selectedHuman, relativePosition.Y - _selectedHuman.ActualHeight / 2);
                 }
             }
         }
@@ -312,26 +356,32 @@ namespace SaveTheHumans
         /// <param name="e"></param>
         private void OnPortalUiEntered(object sender, PointerRoutedEventArgs e)
         {
-            // I the game is in progress and a human is currently being rescued
-            if (_tmtargetTimer.IsEnabled == true && _humanRescueInProgress)
+            // If the game is in progress and a human is currently being rescued
+            if (_tmTargetTimer.IsEnabled && _humanRescueInProgress)
             {
                 // Reset the game timer
                 _uiProgressBar.Value = 0;
 
-                // Create another portal and human, in random locations at the top (portal) and bottom (human)
+                // Create another portal and reset the human in random locations at the top (portal) and bottom (human)
                 Canvas.SetLeft(_uiTarget, _random.Next((int)_pnlPlayArea.ActualWidth / 10, (int)_pnlPlayArea.ActualWidth / 10 * 9));
                 Canvas.SetTop(_uiTarget, _random.Next((int)_pnlPlayArea.ActualHeight / 10, (int)_pnlPlayArea.ActualHeight / 10 * 2));
-                Canvas.SetLeft(_pnlHuman, _random.Next((int)_pnlPlayArea.ActualWidth / 10, (int)_pnlPlayArea.ActualWidth / 10 * 9));
-                Canvas.SetTop(_pnlHuman, _random.Next((int)_pnlPlayArea.ActualHeight / 10 * 8, (int)_pnlPlayArea.ActualHeight / 10 * 9));
+
+                //Canvas.SetLeft(_selectedHuman, _random.Next((int)_pnlPlayArea.ActualWidth / 10, (int)_pnlPlayArea.ActualWidth / 10 * 9));
+                //Canvas.SetTop(_selectedHuman, _random.Next((int)_pnlPlayArea.ActualHeight / 10 * 8, (int)_pnlPlayArea.ActualHeight / 10 * 9));
+
+                _selectedHuman = null;
+
 
                 // Add one to the counter that keeps track o the number of saved humans
                 _savedHumanCounter += 1;
+
                 // Update the label that displays the counter to the user
                 _txtDisplayHumansSaved.Text = _savedHumanCounter.ToString();
 
                 // Allow the user to save and click on another human
                 _humanRescueInProgress = false;
-                _pnlHuman.IsHitTestVisible = true;
+
+               
             }
         }
 
