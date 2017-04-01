@@ -59,7 +59,7 @@
                     <GradientStop Color="#FF16E9EE" Offset="1"/>
                 </LinearGradientBrush>
             </Canvas.Background>
-            <Rectangle x:Name="_uiTarget" Height="50" Stroke="Black" Width="50" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" PointerEntered="OnPortalUiEntered" RadiusX="20" RadiusY="20">
+            <Rectangle x:Name="_uiTarget" Height="50" Stroke="Black" Width="50" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" PointerEntered="OnPortalUiEntered" RadiusX="20" RadiusY="20" PointerPressed="_uiTarget_PointerPressed" Canvas.ZIndex="1">
                 <Rectangle.RenderTransform>
                     <CompositeTransform Rotation="130" SkewX="30"/>
                 </Rectangle.RenderTransform>
@@ -76,10 +76,29 @@
             <TextBlock x:Name="_lblAvoid" TextWrapping="Wrap" Text="Avoid These" FontFamily="Snap ITC" FontSize="18" Style="{StaticResource SubheaderTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,10"/>
             <ContentControl Content="ContentControl" HorizontalAlignment="Center" VerticalAlignment="Center" Template="{StaticResource EnemyTemplate}"/>
         </StackPanel>
-        <TextBlock x:Name="_txtGameOverText" TextWrapping="Wrap" Text="" FontFamily="Arial Black" FontSize="50" FontWeight="Bold" FontStyle="Italic" Grid.Column="1" Margin="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock x:Name="_txtGameOverText" TextWrapping="Wrap" Text="" FontFamily="Snap ITC" FontSize="50" FontWeight="Bold" FontStyle="Italic" Grid.Column="1" Margin="0,10,0,0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" TextAlignment="Center"/>
         <StackPanel x:Name="_pnlLivesSaved" HorizontalAlignment="Right" Height="100" VerticalAlignment="Center" Grid.Column="1" Margin="0">
             <TextBlock x:Name="_lblHumansSaved" TextWrapping="Wrap" Text="Humans Saved" FontSize="25" FontFamily="Snap ITC"/>
             <TextBlock x:Name="_txtDisplayHumansSaved" TextWrapping="Wrap" Text="0" TextAlignment="Center" Margin="0,15,0,0" FontSize="25" FontFamily="Snap ITC"/>
+        </StackPanel>
+        <StackPanel x:Name="_pnlStats" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Margin="0" Grid.Row="1">
+            <TextBlock x:Name="_lblStats" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Stats" VerticalAlignment="Center" Margin="0" FontSize="30" FontFamily="Snap ITC"/>
+            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,-43,0" Orientation="Horizontal">
+                <TextBlock x:Name="_lblTotalHumans" TextWrapping="Wrap" Text="Total Humans:" FontFamily="Snap ITC"/>
+                <TextBlock x:Name="_txtTotalHumans" TextWrapping="Wrap" Text="" Margin="10,0,0,0" FontFamily="Snap ITC"/>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,-50,0" Orientation="Horizontal">
+                <TextBlock x:Name="_lblHumanSaved" TextWrapping="Wrap" Text="Humans Saved:" FontFamily="Snap ITC"/>
+                <TextBlock x:Name="_txtHumansSaved" TextWrapping="Wrap" Text="" Margin="10,0,0,0" FontFamily="Snap ITC"/>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
+                <TextBlock x:Name="_lblSavePercentage" TextWrapping="Wrap" Text="Save %: " FontFamily="Snap ITC"/>
+                <TextBlock x:Name="_txtSavePercantage" TextWrapping="Wrap" Text="" Margin="10,0,0,0" FontFamily="Snap ITC"/>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,-49,0" Orientation="Horizontal">
+                <TextBlock x:Name="_lblEnemyCount" TextWrapping="Wrap" Text="Total Enemies:" Margin="0" FontFamily="Snap ITC"/>
+                <TextBlock x:Name="_txtEnemyCount" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Margin="10,0,0,0" FontFamily="Snap ITC"/>
+            </StackPanel>
         </StackPanel>
 
     </Grid>
