@@ -49,7 +49,6 @@
             <ColumnDefinition Width="6*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-
         <Button x:Name="_btnStartButton" Content="Start!" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Click="OnStartGame" Background="#FF0BAE60"/>
         <ProgressBar x:Name="_uiProgressBar" Grid.Column="1" Grid.Row="2" Height="20" Background="Black"/>
         <Canvas x:Name="_pnlPlayArea" Grid.Row="1" Grid.ColumnSpan="3" PointerMoved="OnPlayAreaPointerMoved" PointerExited="OnPlayAreaPointerExited">
@@ -59,7 +58,7 @@
                     <GradientStop Color="#FF16E9EE" Offset="1"/>
                 </LinearGradientBrush>
             </Canvas.Background>
-            <Rectangle x:Name="_uiTarget" Height="50" Stroke="Black" Width="50" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" PointerEntered="OnPortalUiEntered" RadiusX="20" RadiusY="20" PointerPressed="_uiTarget_PointerPressed" Canvas.ZIndex="1">
+            <Rectangle x:Name="_uiTarget" Height="50" Stroke="Black" Width="50" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" PointerEntered="OnPortalUiEntered" RadiusX="20" RadiusY="20" Canvas.ZIndex="1">
                 <Rectangle.RenderTransform>
                     <CompositeTransform Rotation="130" SkewX="30"/>
                 </Rectangle.RenderTransform>
