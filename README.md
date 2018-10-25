@@ -1,4 +1,4 @@
-# CLICK BELOW TO WATCH DEMO
+# CLICK TO WATCH DEMO OF THE GAME
 [![SaveTheHumans Demo Video](https:\/\/i.ytimg.com\/vi\/GTiE3AuUa-s\/hqdefault.jpg)](https://www.youtube.com/watch?v=GTiE3AuUa-s&feature=youtu.be)
 
 # SaveTheHumans
